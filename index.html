@@ -511,6 +511,43 @@
     .lantern::before { height: 30px; }
     .ev-date { margin-top: 0; }
   }
+  /* ---------- Phones: Wedding Events as a vertical timeline ----------
+     a gold rail on the left with a glowing dot per event; each event is a still sage card:
+     icon on the left, name / tagline / date chip / venue on the right */
+  @media (max-width: 720px) {
+    #events .timeline { gap: 18px; padding-left: 30px; }
+    #events .timeline::before {
+      display: block; left: 9px; top: 8px; bottom: 8px; border-left: 0; width: 2px;
+      background: linear-gradient(180deg, transparent, var(--gold) 6%, var(--gold) 94%, transparent);
+    }
+    #events .ev, #events .ev.right { display: block; position: relative; }
+    #events .ev-node {
+      display: block; position: absolute; left: -27px; top: 34px; margin: 0; width: 14px; height: 14px;
+      box-shadow: 0 0 0 4px var(--paper), 0 0 0 5.5px var(--gold), 0 0 14px 4px rgba(215,188,131,.6);
+    }
+    #events .ev-tag, #events .rod, #events .tassel, #events .scroll::before, #events .scroll::after { display: none; }
+    #events .ev-scroll-wrap { padding-top: 0; display: block; }
+    #events .scroll { width: 100%; animation: none; transform: none; }
+    #events .paper {
+      display: grid; grid-template-columns: 76px 1fr; column-gap: 14px; align-items: center;
+      margin: 0; padding: 16px 16px 16px 12px; text-align: left; border-radius: 16px;
+      box-shadow: inset 0 0 0 1.5px rgba(236,220,180,.55), 0 10px 24px rgba(40,60,40,.18);
+    }
+    #events .paper > .ev-icon-img, #events .paper > .ev-icon {
+      grid-row: 1 / span 8; width: 76px; height: 76px; margin: 0; align-self: center;
+      padding: 6px; border-radius: 50%; background: radial-gradient(circle, rgba(255,246,216,.18), rgba(255,246,216,.04) 70%);
+    }
+    #events .paper > :not(.ev-icon-img):not(.ev-icon) { grid-column: 2; min-width: 0; }
+    #events .paper h3 { font-size: 19px; letter-spacing: .12em; line-height: 1.2; }
+    #events .paper .sub { font-size: 19px; margin: 2px 0 8px; }
+    #events .paper .when {
+      justify-self: start; font-size: 14px; letter-spacing: .04em; padding: 3px 12px; border-radius: 20px;
+      background: rgba(255,246,216,.14); border: 1px solid rgba(236,220,180,.5);
+    }
+    #events .paper .where { font-size: 15px; margin-top: 8px; }
+    #events .paper .addr-line { font-size: 13px; margin-top: 2px; text-wrap: pretty; }
+    #events .ev-map { justify-self: start; margin-top: 10px; }
+  }
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation: none !important; transition-duration: .01ms !important; }
     #petals { display: none; }
