@@ -113,6 +113,8 @@
     -webkit-text-stroke: .6px rgba(255,246,216,.9);
     text-shadow: 0 0 1px #2a1306, 0 1px 2px rgba(30,10,0,.95), 0 2px 6px rgba(30,10,0,.9), 0 0 18px rgba(30,10,0,.85), 0 0 28px rgba(246,217,138,.35);
   }
+  /* phones: lift the names onto the darker middle of the door */
+  @media (max-width: 720px) { .gate-names { top: 70%; } }
   /* soft dark glow behind the names so they read on the wooden door */
   .gate-names::before {
     content: ""; position: absolute; inset: -10% -4%; z-index: -1; border-radius: 50%;
