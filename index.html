@@ -436,6 +436,15 @@
     position: relative; z-index: 2; overflow: hidden; text-align: center;
     min-height: max(560px, 46vw); padding-top: clamp(110px, 11vw, 220px);
   }
+  /* phones: the portrait version of the scene; text sits in the open sky between the hanging lanterns */
+  @media (max-width: 720px) {
+    footer { min-height: 0; aspect-ratio: 941 / 1672; padding-top: 64vw; }
+    .end-text { padding-left: max(28px, env(safe-area-inset-left, 0px)); padding-right: max(28px, env(safe-area-inset-right, 0px)); }
+    footer .end-text .eyebrow { font-size: 22px; }
+    footer .end-names { font-size: min(10.5vw, 44px); white-space: nowrap; }
+    .end-text .caps-sm { font-size: 12px; letter-spacing: .22em; }
+    .end-text .fam { font-size: 15px; line-height: 1.4; }
+  }
   .footer-img {
     position: absolute; inset: 0; width: 100%; height: 100%; max-width: none; object-fit: cover; object-position: 50% 100%;
     -webkit-mask-image: linear-gradient(180deg, transparent, #000 18%); mask-image: linear-gradient(180deg, transparent, #000 18%);
@@ -683,7 +692,10 @@
     <p class="caps-sm" id="hashtag"></p>
     <p class="fam" id="endFamilies"></p>
   </div>
-  <img class="footer-img" src="assets/footer.webp" alt="Lakeside palace at sunset seen from a flower-draped terrace" loading="lazy">
+  <picture>
+    <source media="(max-width: 720px)" srcset="assets/footer-mobile.webp">
+    <img class="footer-img" src="assets/footer.webp" alt="Lakeside palace at sunset seen from a flower-draped terrace" loading="lazy">
+  </picture>
 </footer>
 
 <script>
