@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Great+Vibes&family=Parisienne&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Tiro+Devanagari+Hindi&display=swap" rel="stylesheet">
 <style>
-  /* Layout: a royal Rajasthani journey — gate → palace → pink-sandstone page framed by spinning blue mandalas → desert village farewell */
+  /* Layout: a royal Rajasthani journey — gate → palace → pink-sandstone page framed by spinning blue mandalas → lakeside palace farewell */
   :root {
     --paper: #fbeee6;
     --paper-2: #f6dfd3;
@@ -430,19 +430,19 @@
   .rsvp .btn-gold { text-align: center; margin-top: 6px; background: linear-gradient(135deg, #a3192b, var(--maroon)); color: var(--gold-light); }
   .wa-note { font-size: 15px; color: var(--muted); text-align: center; }
 
-  /* Footer: desert village */
+  /* Footer: lakeside palace at sunset (assets/footer.webp); the farewell text sits in its empty sky,
+     and the photo's top edge fades into the page */
   footer {
-    position: relative; z-index: 2; overflow: hidden;
-    background: linear-gradient(180deg, #fbe9c8, #f6c98a);
-    padding-top: 70px; text-align: center;
+    position: relative; z-index: 2; overflow: hidden; text-align: center;
+    min-height: max(560px, 40vw); padding-top: clamp(60px, 7vw, 110px);
+  }
+  .footer-img {
+    position: absolute; inset: 0; width: 100%; height: 100%; max-width: none; object-fit: cover; object-position: 50% 100%;
+    -webkit-mask-image: linear-gradient(180deg, transparent, #000 18%); mask-image: linear-gradient(180deg, transparent, #000 18%);
   }
   .end-text { position: relative; z-index: 1; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
   .end-names { font-family: var(--f-names); font-weight: 400; font-size: clamp(54px, 11vw, 92px); color: var(--maroon); line-height: 1.1; }
   .end-text .fam { color: var(--muted); margin-top: 6px; }
-  .desert { display: block; width: 100%; height: clamp(240px, 38vw, 460px); margin-top: -10px; }
-  .caravan { animation: caravan 70s linear infinite; }
-  @keyframes caravan { from { transform: translateX(1300px); } to { transform: translateX(-700px); } }
-  .blades { animation: spin 6s linear infinite; transform-box: fill-box; transform-origin: center; }
 
   /* ---------- Theme option: Sage Green + Champagne Gold (CONFIG.theme = "sage") ----------
      Background #F7F3E9 · Green #526B52 · Gold #D7BC83 */
@@ -468,7 +468,6 @@
   .theme-sage .rsvp .btn-gold { background: linear-gradient(135deg, #6a846a, #3f5640); }
   .theme-sage .petal { background: radial-gradient(ellipse at 30% 30%, #fffaf0, #e2cf9e); }
   .theme-sage .petal.marigold { background: radial-gradient(circle at 40% 40%, #e4ecd9, #9fb39a); }
-  .theme-sage footer { background: linear-gradient(180deg, #F7F3E9, #e2e5d2); }
   .theme-sage .save-card, .theme-sage .family-card { box-shadow: inset 0 0 0 2px var(--gold), 0 14px 34px rgba(50,70,50,.14); }
 
   @media (max-width: 720px) {
@@ -684,7 +683,7 @@
     <p class="caps-sm" id="hashtag"></p>
     <p class="fam" id="endFamilies"></p>
   </div>
-  <svg class="desert" id="desert" viewBox="0 0 1200 460" preserveAspectRatio="xMidYMax slice" aria-hidden="true"></svg>
+  <img class="footer-img" src="assets/footer.webp" alt="Lakeside palace at sunset seen from a flower-draped terrace" loading="lazy">
 </footer>
 
 <script>
@@ -827,35 +826,6 @@ function mapSVG() {
   </svg>`;
 }
 
-function desertScene() {
-  const camel = (x, y, s) => `<g transform="translate(${x} ${y}) scale(${s})"><path d="M8 26 C8 20 16 18 22 22 L26 26 C28 34 30 38 36 36 C40 24 52 10 64 14 C74 16 80 26 86 34 C90 40 88 46 86 50 L88 78 L84 78 L80 54 L76 56 L76 78 L72 78 L70 56 L46 56 L44 78 L40 78 L38 56 L34 54 L32 78 L28 78 L28 48 C24 44 22 36 20 30 L14 30 C10 32 8 30 8 26Z" fill="#6b3a1c"/><path d="M50 18 Q62 8 74 20 L70 30 Q60 24 52 28Z" fill="#b3122d"/><path d="M52 28 Q60 24 70 30" stroke="#f6d98a" stroke-width="2" fill="none"/></g>`;
-  const hut = (x, y, s) => {
-    const w = 80 * s, h = 60 * s;
-    let zig = '';
-    for (let i = 0; i < 8; i++) zig += `${x - w / 2 + i * w / 8} ${y - h + 18 * s + (i % 2 ? 0 : 6 * s)} `;
-    return `<rect x="${x - w / 2}" y="${y - h}" width="${w}" height="${h}" fill="#f4e6cc" stroke="#c9a673"/>
-      <rect x="${x - w / 2}" y="${y - h + 12 * s}" width="${w}" height="${10 * s}" fill="#8b2c1a"/>
-      <polyline points="${zig}" fill="none" stroke="#fff" stroke-width="${1.6 * s}"/>
-      <path d="M${x - 10 * s} ${y} V${y - 26 * s} Q${x} ${y - 38 * s} ${x + 10 * s} ${y - 26 * s} V${y}Z" fill="#5a2e15"/>
-      <path d="M${x - w / 2 - 12 * s} ${y - h + 2} L${x} ${y - h - 50 * s} L${x + w / 2 + 12 * s} ${y - h + 2}Z" fill="#c58b3c"/>
-      <path d="M${x - w / 4} ${y - h - 4} L${x} ${y - h - 46 * s} M${x + w / 4} ${y - h - 4} L${x} ${y - h - 46 * s} M${x} ${y - h - 2} V${y - h - 46 * s}" stroke="#9a6526" stroke-width="${2 * s}"/>`;
-  };
-  const tree = (x, y) => {
-    let c = `<path d="M${x} ${y} C${x - 4} ${y - 40} ${x + 6} ${y - 70} ${x - 2} ${y - 110}" stroke="#6b3a1c" stroke-width="10" fill="none"/>`;
-    [[-40, -120, 38], [10, -140, 44], [50, -110, 34], [-10, -100, 30], [30, -165, 30]].forEach(([dx, dy, r], i) => c += `<circle cx="${x + dx}" cy="${y + dy}" r="${r}" fill="${i % 2 ? '#3f6b2f' : '#4d7c3a'}"/>`);
-    for (let k = 0; k < 16; k++) c += `<circle cx="${x - 60 + (k * 37) % 120}" cy="${y - 190 + (k * 53) % 110}" r="3" fill="#c0392b"/>`;
-    return c;
-  };
-  return `<defs><radialGradient id="dsun"><stop offset="0" stop-color="#fff6d8"/><stop offset="1" stop-color="#fff6d8" stop-opacity="0"/></radialGradient></defs>
-    <circle cx="880" cy="170" r="140" fill="url(#dsun)"/><circle cx="880" cy="170" r="46" fill="#fff1c9"/>
-    <path d="M0 300 Q200 240 420 290 T820 270 T1200 280 V460 H0Z" fill="#f2c98a"/>
-    <path d="M0 350 Q260 300 520 340 T1200 320 V460 H0Z" fill="#e9b872"/>
-    <g transform="translate(1040 290)"><path d="M0 0 L-10 -150 M0 0 L10 -150 M-8 -60 H8" stroke="#6b5a48" stroke-width="3"/><g class="blades"><path d="M0 -150 L-6 -210 L6 -210Z M0 -150 L52 -120 L46 -110Z M0 -150 L-52 -120 L-46 -110Z" fill="#8a7a66"/><circle cx="0" cy="-150" r="5" fill="#4a3a2a"/></g></g>
-    ${tree(170, 380)}
-    ${hut(330, 392, 1.25)}${hut(470, 400, 1)}${hut(760, 408, .9)}
-    <g class="caravan">${camel(0, 300, 1)}${camel(120, 306, .9)}${camel(230, 310, .8)}${camel(330, 314, .7)}</g>
-    <path d="M0 400 Q300 370 600 400 T1200 395 V460 H0Z" fill="#dca35c"/>`;
-}
 
 /* The mandala image holds only an outer slice of the design; its true centre (found by fitting the rim)
    lies outside the picture. Mirror one 18° wedge around that centre to rebuild the full circle. */
@@ -940,7 +910,6 @@ $('rsvpBy').textContent = 'Kindly respond by ' + CONFIG.rsvpBy;
 $('endNames').textContent = `${G.name} & ${B.name}`;
 $('hashtag').textContent = CONFIG.hashtag;
 $('endFamilies').textContent = `With love, ${CONFIG.groomFamily.title} & ${CONFIG.brideFamily.title}`;
-$('desert').innerHTML = desertScene();
 document.title = `${G.name} & ${B.name} | Shadi Invitation`;
 
 /* ---------- Gate → site ---------- */
