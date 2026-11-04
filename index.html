@@ -536,7 +536,7 @@
     #events.ev-timeline .ev-scroll-wrap { padding-top: 0; display: block; }
     #events.ev-timeline .scroll { width: 100%; animation: none; transform: none; }
     #events.ev-timeline .paper {
-      display: grid; grid-template-columns: 76px 1fr; column-gap: 14px; align-items: center;
+      display: grid; grid-template-columns: 76px minmax(0, 1fr); column-gap: 14px; align-items: center;
       margin: 0; padding: 16px 16px 16px 12px; text-align: left; border-radius: 16px;
       box-shadow: inset 0 0 0 1.5px rgba(236,220,180,.55), 0 10px 24px rgba(40,60,40,.18);
     }
@@ -545,7 +545,8 @@
       padding: 6px; border-radius: 50%; background: radial-gradient(circle, rgba(255,246,216,.18), rgba(255,246,216,.04) 70%);
     }
     #events.ev-timeline .paper > :not(.ev-icon-img):not(.ev-icon) { grid-column: 2; min-width: 0; }
-    #events.ev-timeline .paper h3 { font-size: 19px; letter-spacing: .12em; line-height: 1.2; }
+    #events.ev-timeline .paper h3 { font-size: 19px; letter-spacing: .12em; line-height: 1.2; overflow-wrap: anywhere; }
+    #events.ev-timeline .paper .sub, #events.ev-timeline .paper .where { overflow-wrap: anywhere; }
     #events.ev-timeline .paper .sub { font-size: 19px; margin: 2px 0 8px; }
     #events.ev-timeline .paper .when {
       justify-self: start; font-size: 14px; letter-spacing: .04em; padding: 3px 12px; border-radius: 20px;
@@ -568,12 +569,14 @@
   html.anim .reveal .divider { transform: scaleX(.2); opacity: 0; transition: transform 1.2s cubic-bezier(.2,.7,.2,1) .3s, opacity .8s ease .3s; }
   html.anim .reveal.in .divider { transform: none; opacity: 1; }
   @supports ((background-clip: text) or (-webkit-background-clip: text)) {
-    .h2 { background: linear-gradient(100deg, var(--maroon) 40%, var(--gold) 50%, var(--maroon) 60%) 120% 0 / 250% 100% no-repeat; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+    /* solid maroon underneath so the text never goes blank where the moving gold band is not */
+    .h2 { background: linear-gradient(100deg, transparent 40%, var(--gold) 50%, transparent 60%) 120% 0 / 250% 100% no-repeat, var(--maroon); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
     .reveal.in .h2 { animation: shimmer 2.4s ease .4s 1 both; }
   }
   @keyframes shimmer { from { background-position: 120% 0; } to { background-position: -20% 0; } }
 
   html.anim #timeline .ev.reveal { transition-delay: calc(var(--i, 0) * 120ms); }
+  #events, #invite, #couple, #family, #save, #venue, #rsvp { overflow-x: clip; }   /* slide-in offsets never widen the page */
   @media (max-width: 720px) {
     html.anim #events.ev-timeline .ev.reveal { transform: translateX(40px); }
     html.anim #events.ev-timeline .ev.reveal.in { transform: none; }
@@ -606,6 +609,16 @@
   .end-text.in > :nth-child(3) { transition-delay: .4s; }
   .end-text.in > :nth-child(4) { transition-delay: .55s; }
 
+  /* very small phones (≤360px): tighter event cards */
+  @media (max-width: 360px) {
+    #events.ev-timeline .timeline { padding-left: 24px; }
+    #events.ev-timeline .ev-node { left: -21px; }
+    #events.ev-timeline .timeline::before { left: 6px; }
+    #events.ev-timeline .paper { grid-template-columns: 56px minmax(0, 1fr); column-gap: 10px; padding: 14px 12px 14px 10px; }
+    #events.ev-timeline .paper > .ev-icon-img, #events.ev-timeline .paper > .ev-icon { width: 56px; height: 56px; padding: 4px; }
+    #events.ev-timeline .paper h3 { font-size: 16px; letter-spacing: .08em; }
+    #events.ev-timeline .paper .sub { font-size: 17px; }
+  }
   @media (prefers-reduced-motion: reduce) {
     html.anim .hero-title > *, html.anim .reveal .divider, html.anim .end-text > * { opacity: 1 !important; transform: none !important; }
     .h2 { -webkit-text-fill-color: var(--maroon); }
