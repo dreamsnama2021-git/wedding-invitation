@@ -1005,7 +1005,7 @@ $('saveGrid').innerHTML = saveCards.map((c, i) => `
 
 const scratchers = [...$('saveGrid').querySelectorAll('canvas')].map((sc, i) => {
   const ctx = sc.getContext('2d'), btn = $('saveGrid').querySelector(`.link-btn[data-i="${i}"]`);
-  let scratched = false, moves = 0, last = null;
+  let scratched = false, moves = 0, last = null, dist = 0;
   function paint() {
     if (scratched) return;
     const r = sc.parentElement.getBoundingClientRect(), dpr = Math.min(2, window.devicePixelRatio || 1);
@@ -1032,14 +1032,16 @@ const scratchers = [...$('saveGrid').querySelectorAll('canvas')].map((sc, i) => 
   }
   function scratchAt(x, y) {
     ctx.globalCompositeOperation = 'destination-out';
-    ctx.lineWidth = 46; ctx.lineCap = 'round';
+    ctx.lineWidth = 60; ctx.lineCap = 'round';
     ctx.beginPath(); ctx.moveTo(last ? last.x : x, last ? last.y : y); ctx.lineTo(x, y); ctx.stroke();
+    if (last) dist += Math.hypot(x - last.x, y - last.y);
     last = { x, y };
-    if (++moves % 10 === 0) {
+    if (dist > 80) { reveal(); return; }   // a short swipe is enough
+    if (++moves % 4 === 0) {
       const data = ctx.getImageData(0, 0, sc.width, sc.height).data;
       let clear = 0, total = 0;
       for (let k = 3; k < data.length; k += 64) { total++; if (data[k] === 0) clear++; }
-      if (clear / total > .45) reveal();
+      if (clear / total > .05) reveal();   // a light scratch is enough
     }
   }
   const pos = e => { const r = sc.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; };
