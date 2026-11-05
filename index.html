@@ -511,51 +511,6 @@
     .lantern::before { height: 30px; }
     .ev-date { margin-top: 0; }
   }
-  /* ---------- Phones: Wedding Events as a vertical timeline ----------
-     a gold rail on the left with a glowing dot per event; each event is a still sage card:
-     icon on the left, name / tagline / date chip / venue on the right */
-  .ev-switch { display: none; }
-  @media (max-width: 720px) {
-    /* style switch: Timeline (default) or the hanging Scrolls */
-    .ev-switch { display: inline-flex; gap: 4px; padding: 4px; margin: -18px auto 26px; border-radius: 30px; background: rgba(255,255,255,.6); border: 1px solid var(--gold); }
-    .ev-switch button { border: 0; background: none; padding: 7px 18px; border-radius: 24px; font-family: var(--f-caps); font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--maroon); cursor: pointer; }
-    .ev-switch button[aria-pressed="true"] { background: var(--maroon); color: var(--gold-light); }
-    .ev-switch button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
-    #events:not(.ev-timeline) .ev-switch { margin-bottom: 48px; }
-    #events.ev-timeline .timeline { gap: 18px; padding-left: 30px; }
-    #events.ev-timeline .timeline::before {
-      display: block; left: 9px; top: 8px; bottom: 8px; border-left: 0; width: 2px;
-      background: linear-gradient(180deg, transparent, var(--gold) 6%, var(--gold) 94%, transparent);
-    }
-    #events.ev-timeline .ev, #events.ev-timeline .ev.right { display: block; position: relative; }
-    #events.ev-timeline .ev-node {
-      display: block; position: absolute; left: -27px; top: 34px; margin: 0; width: 14px; height: 14px;
-      box-shadow: 0 0 0 4px var(--paper), 0 0 0 5.5px var(--gold), 0 0 14px 4px rgba(215,188,131,.6);
-    }
-    #events.ev-timeline .ev-tag, #events.ev-timeline .rod, #events.ev-timeline .tassel, #events.ev-timeline .scroll::before, #events.ev-timeline .scroll::after { display: none; }
-    #events.ev-timeline .ev-scroll-wrap { padding-top: 0; display: block; }
-    #events.ev-timeline .scroll { width: 100%; animation: none; transform: none; }
-    #events.ev-timeline .paper {
-      display: grid; grid-template-columns: 76px minmax(0, 1fr); column-gap: 14px; align-items: center;
-      margin: 0; padding: 16px 16px 16px 12px; text-align: left; border-radius: 16px;
-      box-shadow: inset 0 0 0 1.5px rgba(236,220,180,.55), 0 10px 24px rgba(40,60,40,.18);
-    }
-    #events.ev-timeline .paper > .ev-icon-img, #events.ev-timeline .paper > .ev-icon {
-      grid-row: 1 / span 8; width: 76px; height: 76px; margin: 0; align-self: center;
-      padding: 6px; border-radius: 50%; background: radial-gradient(circle, rgba(255,246,216,.18), rgba(255,246,216,.04) 70%);
-    }
-    #events.ev-timeline .paper > :not(.ev-icon-img):not(.ev-icon) { grid-column: 2; min-width: 0; }
-    #events.ev-timeline .paper h3 { font-size: 19px; letter-spacing: .12em; line-height: 1.2; overflow-wrap: anywhere; }
-    #events.ev-timeline .paper .sub, #events.ev-timeline .paper .where { overflow-wrap: anywhere; }
-    #events.ev-timeline .paper .sub { font-size: 19px; margin: 2px 0 8px; }
-    #events.ev-timeline .paper .when {
-      justify-self: start; font-size: 14px; letter-spacing: .04em; padding: 3px 12px; border-radius: 20px;
-      background: rgba(255,246,216,.14); border: 1px solid rgba(236,220,180,.5);
-    }
-    #events.ev-timeline .paper .where { font-size: 15px; margin-top: 8px; }
-    #events.ev-timeline .paper .addr-line { font-size: 13px; margin-top: 2px; text-wrap: pretty; }
-    #events.ev-timeline .ev-map { justify-self: start; margin-top: 10px; }
-  }
   /* ---------- Motion ----------
      hero names rise in after the gate, gold dividers draw open, section headings shimmer once,
      event cards slide in one after another, icons float, countdown digits pop on change,
@@ -577,12 +532,6 @@
 
   html.anim #timeline .ev.reveal { transition-delay: calc(var(--i, 0) * 120ms); }
   #events, #invite, #couple, #family, #save, #venue, #rsvp { overflow-x: clip; }   /* slide-in offsets never widen the page */
-  @media (max-width: 720px) {
-    html.anim #events.ev-timeline .ev.reveal { transform: translateX(40px); }
-    html.anim #events.ev-timeline .ev.reveal.in { transform: none; }
-    html.anim #events.ev-timeline .ev.reveal .ev-node { scale: 0; transition: scale .5s cubic-bezier(.3,1.6,.5,1) calc(var(--i, 0) * 120ms + .35s); }
-    html.anim #events.ev-timeline .ev.reveal.in .ev-node { scale: 1; }
-  }
   .ev-icon-img { animation: floaty 4.5s ease-in-out infinite; animation-delay: calc(var(--i, 0) * -.7s); }
   @keyframes floaty { 50% { translate: 0 -5px; } }
   .invite-baraat { animation: march 9s ease-in-out infinite; }
@@ -609,16 +558,6 @@
   .end-text.in > :nth-child(3) { transition-delay: .4s; }
   .end-text.in > :nth-child(4) { transition-delay: .55s; }
 
-  /* very small phones (≤360px): tighter event cards */
-  @media (max-width: 360px) {
-    #events.ev-timeline .timeline { padding-left: 24px; }
-    #events.ev-timeline .ev-node { left: -21px; }
-    #events.ev-timeline .timeline::before { left: 6px; }
-    #events.ev-timeline .paper { grid-template-columns: 56px minmax(0, 1fr); column-gap: 10px; padding: 14px 12px 14px 10px; }
-    #events.ev-timeline .paper > .ev-icon-img, #events.ev-timeline .paper > .ev-icon { width: 56px; height: 56px; padding: 4px; }
-    #events.ev-timeline .paper h3 { font-size: 16px; letter-spacing: .08em; }
-    #events.ev-timeline .paper .sub { font-size: 17px; }
-  }
   @media (prefers-reduced-motion: reduce) {
     html.anim .hero-title > *, html.anim .reveal .divider, html.anim .end-text > * { opacity: 1 !important; transform: none !important; }
     .h2 { -webkit-text-fill-color: var(--maroon); }
@@ -750,14 +689,13 @@
   </section>
 
   <!-- Events -->
-  <section id="events" class="ev-timeline">
+  <section id="events">
     <div class="wrap center">
       <div class="reveal">
         <p class="eyebrow">The celebrations begin</p>
         <h2 class="h2">Wedding Events</h2>
         <svg class="divider" viewBox="0 0 200 20" aria-hidden="true"><path d="M0 10 H82 M118 10 H200" stroke="#d6a23e"/><path d="M100 2 L108 10 L100 18 L92 10Z" fill="#d6a23e"/><circle cx="87" cy="10" r="2" fill="#d6a23e"/><circle cx="113" cy="10" r="2" fill="#d6a23e"/></svg>
       </div>
-      <div class="ev-switch" role="group" aria-label="Events layout"><button type="button" data-style="timeline" aria-pressed="true">Timeline</button><button type="button" data-style="scroll" aria-pressed="false">Scroll</button></div>
       <div class="timeline" id="timeline"></div>
     </div>
   </section>
@@ -1043,14 +981,6 @@ $('timeline').innerHTML = CONFIG.events.map((e, i) => `
     <span class="ev-node"></span>
     <div class="ev-tag"><span class="lantern" style="--d:${(i * -.6).toFixed(1)}s"></span><span class="ev-date">${esc(e.date)}</span></div>
   </div>`).join('');
-/* events layout switch (phones): remembers the guest's choice */
-function setEvStyle(style) {
-  $('events').classList.toggle('ev-timeline', style !== 'scroll');
-  document.querySelectorAll('.ev-switch button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.style === style)));
-  try { localStorage.setItem('evStyle', style); } catch (e) {}
-}
-document.querySelectorAll('.ev-switch button').forEach(b => b.addEventListener('click', () => setEvStyle(b.dataset.style)));
-try { const saved = localStorage.getItem('evStyle'); if (saved) setEvStyle(saved); } catch (e) {}
 $('venueName').textContent = CONFIG.venue.name;
 $('venueAddr').textContent = CONFIG.venue.address;
 const mapsUrl = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(CONFIG.venue.mapQuery);
